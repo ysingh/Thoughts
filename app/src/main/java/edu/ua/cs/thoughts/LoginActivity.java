@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -171,6 +172,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+
+            Intent intent = new Intent(this, Main.class);
+            startActivity(intent);
         }
     }
     private boolean isEmailValid(String email) {
