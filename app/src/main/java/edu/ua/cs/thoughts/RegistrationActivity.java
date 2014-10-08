@@ -1,0 +1,58 @@
+package edu.ua.cs.thoughts;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+
+public class RegistrationActivity extends Activity {
+
+    EditText etEmail, etPassword, etUsername;
+    Button btnRegister;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registration);
+
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        etUsername = (EditText) findViewById(R.id.etUsername);
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                User newUser = new User(etEmail.getText().toString(), etUsername.getText().toString(), etPassword.getText().toString());
+                UserDatabase.getInstance().addUser(newUser);
+
+                Toast toast = Toast.makeText(getApplicationContext(), "Welcome to Thoughts, " + newUser.getUsername(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.registration, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
