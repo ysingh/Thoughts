@@ -22,7 +22,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.app.ActionBar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -41,7 +43,7 @@ import java.util.List;
  * and follow the steps in "Step 1" to create an OAuth 2.0 client for your package.
  */
 
-public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor>{
+public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -64,11 +66,16 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private SignInButton mPlusSignInButton;
     private View mSignOutButtons;
     private View mLoginFormView;
+    private ImageView mLogoImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Remove action bar
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
 
         // Find the Google+ sign in button.
         mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
@@ -111,10 +118,21 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             }
         });
 
+        Button mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
         mSignOutButtons = findViewById(R.id.plus_sign_out_buttons);
+        mLogoImg = (ImageView) findViewById(R.id.imgLogo);
+        mLogoImg.setImageResource(R.drawable.thoughtslogo3);
     }
 
     private void populateAutoComplete() {

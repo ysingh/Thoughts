@@ -1,2 +1,3 @@
 # Thoughts
-personal sentiment tracking and analysis
+Personal Sentiment Tracking and Analysis
+
