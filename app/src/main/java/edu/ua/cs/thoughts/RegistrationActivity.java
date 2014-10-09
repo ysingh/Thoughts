@@ -1,6 +1,7 @@
 package edu.ua.cs.thoughts;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,15 +13,20 @@ import android.widget.Toast;
 
 public class RegistrationActivity extends Activity {
 
+    private UsersDataSource datasource;
     EditText etEmail, etPassword, etUsername;
-    Button btnRegister;
+    Button btnRegister, btnCurrentUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        datasource = new UsersDataSource(this);
+        datasource.open();
+
         btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnCurrentUsers = (Button) findViewById(R.id.btnCurrentUsers);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
         etUsername = (EditText) findViewById(R.id.etUsername);
@@ -29,10 +35,20 @@ public class RegistrationActivity extends Activity {
             @Override
             public void onClick(View view) {
                 User newUser = new User(etEmail.getText().toString(), etUsername.getText().toString(), etPassword.getText().toString());
-                UserDatabase.getInstance().addUser(newUser);
+
+                // UserDatabase.getInstance().addUser(newUser);
+                datasource.addUser(newUser);
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Welcome to Thoughts, " + newUser.getUsername(), Toast.LENGTH_SHORT);
                 toast.show();
+            }
+        });
+
+        btnCurrentUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CurrentUsersActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -54,5 +70,17 @@ public class RegistrationActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        datasource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        datasource.close();
+        super.onPause();
     }
 }

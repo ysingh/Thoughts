@@ -1,39 +1,45 @@
 package edu.ua.cs.thoughts;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.os.Handler;
 
 
-public class Main extends Activity {
+public class SplashActivity extends Activity {
+
+    private static final int SPLASH_DISPLAY_TIME = 2000; // splash screen delay time
 
     Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.splash_activity);
 
-        btnStart = (Button) findViewById(R.id.btnStart);
-        btnStart.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Context context = getApplicationContext();
-                CharSequence text = "Hello toast!";
-                int duration = Toast.LENGTH_SHORT;
+        // Remove action bar
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
 
-                // Toast toast = Toast.makeText(context, text, duration);
-                // toast.show();
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
 
-                Intent intent = new Intent(Main.this, LoginActivity.class);
-                Main.this.startActivity(intent);
+                Intent intent = new Intent();
+                intent.setClass(SplashActivity.this, LoginActivity.class);
+
+                SplashActivity.this.startActivity(intent);
+                SplashActivity.this.finish();
+
+                // transition from splash to main menu
+                overridePendingTransition(R.anim.activityfadein,
+                R.anim.splashfadeout);
+
             }
-        });
+        }, SPLASH_DISPLAY_TIME);
     }
 
     @Override

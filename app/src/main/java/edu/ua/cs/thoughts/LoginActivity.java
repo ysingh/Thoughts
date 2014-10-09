@@ -191,7 +191,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
-            Intent intent = new Intent(this, Main.class);
+            Intent intent = new Intent(this, SplashActivity.class);
             startActivity(intent);
         }
     }

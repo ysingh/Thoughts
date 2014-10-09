@@ -9,17 +9,4 @@
     android:background="@drawable/splash"
     tools:context=".Main">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btnStart"
-        android:id="@+id/btnStart"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
 </RelativeLayout>
