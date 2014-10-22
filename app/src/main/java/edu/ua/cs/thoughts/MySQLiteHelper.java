@@ -12,15 +12,26 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EMAIL = "email";
     public static final String COLUMN_PASSWORD = "password";
 
+    public static final String TABLE_THOUGHTS = "thoughts";
+    public static final String COLUMN_TEXT = "text";
+    public static final String COLUMN_THOUGHTID = "thoughtid";
+    public static final String COLUMN_THOUGHTUSER = "username";
+
     private static final String DATABASE_NAME = "users.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Database creation sql statement
-    private static final String DATABASE_CREATE =
+    // Database creation sql statements
+    private static final String USERS_CREATE =
             "create table " + TABLE_USERS +
             "(" + COLUMN_USERNAME + " text unique, "
             + COLUMN_EMAIL + " text not null, "
             + COLUMN_PASSWORD + " text not null)";
+
+    private static final String THOUGHTS_CREATE =
+            "create table " + TABLE_THOUGHTS +
+                    "(" + COLUMN_THOUGHTID + " integer primary key autoincrement, "
+                    + COLUMN_THOUGHTUSER + " text not null, "
+                    + COLUMN_TEXT + " text)";
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -28,7 +39,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(DATABASE_CREATE);
+        database.execSQL(USERS_CREATE);
+        database.execSQL(THOUGHTS_CREATE);
     }
 
     @Override
@@ -37,6 +49,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_THOUGHTS);
         onCreate(db);
     }
 

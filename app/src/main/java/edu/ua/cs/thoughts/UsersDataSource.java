@@ -47,10 +47,6 @@ public class UsersDataSource {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
 
-        /* users.add(new User("tarifhaque@gmail.com", "thaque", "goofy"));
-        users.add(new User("becky5@aol.com", "becka", "12345"));
-        users.add(new User("whatever@ua.edu", "careless", "guessme")); */
-
         Cursor cursor = database.query(MySQLiteHelper.TABLE_USERS,
                 allColumns, null, null, null, null, null);
 
