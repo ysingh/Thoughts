@@ -45,13 +45,25 @@ public class FeedActivity extends Activity
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
 
-        if (position == 0) {
-            fragmentManager.beginTransaction().replace(R.id.container, ViewFeedFragment.newInstance())
-                    .commit();
-        } else {
-            // update the main content by replacing fragments
-            fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                    .commit();
+        switch (position) {
+            case 0: {
+                fragmentManager.beginTransaction().replace(R.id.container, ViewFeedFragment.newInstance())
+                        .commit();
+                break;
+            }
+
+            case 1: {
+                fragmentManager.beginTransaction().replace(R.id.container, AddThoughtFragment.newInstance())
+                        .commit();
+                break;
+            }
+
+            default: {
+                // update the main content by replacing fragments
+                fragmentManager.beginTransaction().replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                        .commit();
+            }
+
         }
 
     }
