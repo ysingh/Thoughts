@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * Created by TaxMac on 10/16/14.
@@ -17,6 +19,11 @@ public class AddThoughtFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+
+    ThoughtsDataSource thoughtsDataSource;
+
+    Button btnAddThought;
+    EditText etEnterThought;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -31,6 +38,24 @@ public class AddThoughtFragment extends Fragment {
     }
 
     public AddThoughtFragment() {
+        thoughtsDataSource = new ThoughtsDataSource(this.getActivity());
+        thoughtsDataSource.open();
+
+        initializeViews();
+    }
+
+    private void initializeViews() {
+        btnAddThought =  (Button) getActivity().findViewById(R.id.btnAddThought);
+        etEnterThought = (EditText) getActivity().findViewById(R.id.etEnterThought);
+
+        btnAddThought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                String enteredThought = etEnterThought.getText().toString();
+            }
+        });
     }
 
     @Override
@@ -46,4 +71,6 @@ public class AddThoughtFragment extends Fragment {
         ((FeedActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
-}
+
+
+ }

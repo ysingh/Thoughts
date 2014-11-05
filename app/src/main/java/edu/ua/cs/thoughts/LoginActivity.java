@@ -68,10 +68,15 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private View mLoginFormView;
     private ImageView mLogoImg;
 
+    UsersDataSource usersDataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        usersDataSource = new UsersDataSource(this);
+        usersDataSource.open();
 
         // Remove action bar
         ActionBar actionBar = getActionBar();
@@ -179,6 +184,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             cancel = true;
         }
 
+        if (!usersDataSource.isRegisteredUser(email, password)) {
+            mEmailView.setError("Email/password combination does not match registered user.");
+            focusView = mEmailView;
+            cancel = true;
+        }
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -191,6 +202,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask.execute((Void) null);
 
             Intent intent = new Intent(this, FeedActivity.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putString("email", email);
+            intent.putExtras(mBundle);
             startActivity(intent);
         }
     }

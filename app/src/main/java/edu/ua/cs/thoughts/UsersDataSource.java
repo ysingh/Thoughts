@@ -40,10 +40,16 @@ public class UsersDataSource {
         database.insert(MySQLiteHelper.TABLE_USERS, null, values);
     }
 
+    /**
+     * Delete a user in the database with a given username.
+     */
     public void deleteUser(String username) {
         database.delete(MySQLiteHelper.TABLE_USERS, MySQLiteHelper.COLUMN_USERNAME + " = " + username, null);
     }
 
+    /**
+     * Get a list of all Users in the database.
+     */
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
 
@@ -67,5 +73,20 @@ public class UsersDataSource {
     private User cursorToUser(Cursor cursor) {
         User user = new User(cursor.getString(1), cursor.getString(0), cursor.getString(2));
         return user;
+    }
+
+    /**
+     * Determines whether a given email and password combination is valid. If
+     * the combination is valid, returns true. Otherwise, returns false.
+     */
+    public boolean isRegisteredUser(String email, String password) {
+        List<User> userList = getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getEmail().equals(email)) {
+                if (userList.get(i).getPassword().equals(password)) return true;
+                else return false;
+            }
+        }
+        return false;
     }
 }

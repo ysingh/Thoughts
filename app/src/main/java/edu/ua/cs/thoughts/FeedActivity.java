@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 public class FeedActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    private static String userEmail;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -34,6 +36,8 @@ public class FeedActivity extends Activity
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
+
+        userEmail = getIntent().getExtras().getString("email");
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
