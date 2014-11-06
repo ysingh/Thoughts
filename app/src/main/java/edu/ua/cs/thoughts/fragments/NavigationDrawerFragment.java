@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.fragments;
 
 
 import android.app.ActionBar;
@@ -21,6 +21,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.

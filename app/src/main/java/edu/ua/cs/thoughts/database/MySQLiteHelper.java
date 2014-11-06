@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

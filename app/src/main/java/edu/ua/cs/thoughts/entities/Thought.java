@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.entities;
 
 /**
  * Created by TaxMac on 10/10/14.

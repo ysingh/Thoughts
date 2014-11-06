@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.database;
 
 /**
  * Created by TaxMac on 10/8/14.
@@ -11,6 +11,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.ua.cs.thoughts.database.MySQLiteHelper;
+import edu.ua.cs.thoughts.entities.User;
 
 public class UsersDataSource {
 
@@ -88,5 +91,18 @@ public class UsersDataSource {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the username of a user given his or her email.
+     */
+    public String getUsernameGivenEmail(String email) {
+        List<User> userList = getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getEmail().equals(email)) {
+                return userList.get(i).getUsername();
+            }
+        }
+        return null;
     }
 }

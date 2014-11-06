@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.activities;
 
 import android.content.Intent;
 import android.content.IntentSender;

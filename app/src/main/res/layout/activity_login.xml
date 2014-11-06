@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/back"
-    tools:context="edu.ua.cs.thoughts.LoginActivity">
+    tools:context="edu.ua.cs.thoughts.activities.LoginActivity">
 
     <!-- Login progress -->
     <ImageView

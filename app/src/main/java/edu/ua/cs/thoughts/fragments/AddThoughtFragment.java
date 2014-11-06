@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.activities.FeedActivity;
 
 /**
  * Created by TaxMac on 10/16/14.
@@ -19,8 +22,6 @@ public class AddThoughtFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
-
-    ThoughtsDataSource thoughtsDataSource;
 
     Button btnAddThought;
     EditText etEnterThought;
@@ -38,30 +39,47 @@ public class AddThoughtFragment extends Fragment {
     }
 
     public AddThoughtFragment() {
-        thoughtsDataSource = new ThoughtsDataSource(this.getActivity());
-        thoughtsDataSource.open();
-
-        initializeViews();
     }
 
-    private void initializeViews() {
-        btnAddThought =  (Button) getActivity().findViewById(R.id.btnAddThought);
-        etEnterThought = (EditText) getActivity().findViewById(R.id.etEnterThought);
+    /* private void initializeViews() {
+        btnAddThought =  (Button) getView().findViewById(R.id.btnAddThought);
+        etEnterThought = (EditText) getView().findViewById(R.id.etEnterThought);
 
         btnAddThought.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                String enteredThought = etEnterThought.getText().toString();
+            String enteredThought = etEnterThought.getText().toString();
             }
         });
-    }
+    } */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_add_thought, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_add_thought, container, false);
+
+        btnAddThought = (Button) rootView.findViewById(R.id.btnAddThought);
+        etEnterThought = (EditText) rootView.findViewById(R.id.etEnterThought);
+
+        btnAddThought.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String enteredThought = etEnterThought.getText().toString();
+                // ThoughtsDataSource source = ((FeedActivity) getActivity()).thoughtsDataSource;
+                // String username = ((FeedActivity) getActivity()).username;
+
+
+                //source.createThought(enteredThought, username);
+
+                //CharSequence text = username + " says " + enteredThought;
+                //Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
+                // toast.show();
+
+
+
+            }
+        });
+
         return rootView;
     }
 

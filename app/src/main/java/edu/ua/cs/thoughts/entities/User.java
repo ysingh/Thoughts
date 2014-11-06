@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.entities;
 
 /**
  * Created by Tarif Haque on 10/8/14.

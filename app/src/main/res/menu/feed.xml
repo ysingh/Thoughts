@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="edu.ua.cs.thoughts.FeedActivity" >
+    tools:context="edu.ua.cs.thoughts.activities.FeedActivity" >
 
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_new_thought"

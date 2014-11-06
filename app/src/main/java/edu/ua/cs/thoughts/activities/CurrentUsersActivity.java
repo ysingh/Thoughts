@@ -1,10 +1,14 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.activities;
 
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
 import java.util.List;
+
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.entities.User;
+import edu.ua.cs.thoughts.database.UsersDataSource;
 
 public class CurrentUsersActivity extends ListActivity {
     private UsersDataSource datasource;

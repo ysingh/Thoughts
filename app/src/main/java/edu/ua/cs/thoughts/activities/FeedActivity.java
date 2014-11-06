@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -12,11 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
+import edu.ua.cs.thoughts.fragments.NavigationDrawerFragment;
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.ThoughtsDataSource;
+import edu.ua.cs.thoughts.database.UsersDataSource;
+import edu.ua.cs.thoughts.fragments.ViewFeedFragment;
+
 
 public class FeedActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static String userEmail;
+    String userEmail, username;
+    ThoughtsDataSource thoughtsDataSource;
+    UsersDataSource usersDataSource;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -39,10 +48,32 @@ public class FeedActivity extends Activity
 
         userEmail = getIntent().getExtras().getString("email");
 
+        thoughtsDataSource = new ThoughtsDataSource(this);
+        thoughtsDataSource.open();
+
+        usersDataSource = new UsersDataSource(this);
+        usersDataSource.open();
+
+        username = usersDataSource.getUsernameGivenEmail(userEmail);
+
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    @Override
+    protected void onResume() {
+        thoughtsDataSource.open();
+        usersDataSource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        thoughtsDataSource.close();
+        usersDataSource.close();
+        super.onPause();
     }
 
     @Override
@@ -157,6 +188,8 @@ public class FeedActivity extends Activity
             ((FeedActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+
+
     }
 
 }

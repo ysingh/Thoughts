@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import edu.ua.cs.thoughts.R;
 
 
 public class SplashActivity extends Activity {

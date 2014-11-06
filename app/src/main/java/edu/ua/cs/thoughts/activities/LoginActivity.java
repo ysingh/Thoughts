@@ -1,4 +1,4 @@
-package edu.ua.cs.thoughts;
+package edu.ua.cs.thoughts.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -32,6 +32,9 @@ import com.google.android.gms.common.SignInButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.UsersDataSource;
 
 
 /**
@@ -140,6 +143,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         mLogoImg.setImageResource(R.drawable.thoughtslogo3);
     }
 
+    @Override
+    protected void onResume() {
+        usersDataSource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        usersDataSource.close();
+        super.onPause();
+    }
+
     private void populateAutoComplete() {
         getLoaderManager().initLoader(0, null, this);
     }
@@ -201,6 +216,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
+            usersDataSource.close();
             Intent intent = new Intent(this, FeedActivity.class);
             Bundle mBundle = new Bundle();
             mBundle.putString("email", email);
