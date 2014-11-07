@@ -4,8 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
 import edu.ua.cs.thoughts.fragments.ListFeedFragment;
 import edu.ua.cs.thoughts.fragments.NavigationDrawerFragment;
@@ -20,14 +21,39 @@ import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.database.ThoughtsDataSource;
 import edu.ua.cs.thoughts.database.UsersDataSource;
 import edu.ua.cs.thoughts.fragments.ViewFeedFragment;
+import edu.ua.cs.thoughts.fragments.ViewSingleThoughtFragment;
+import edu.ua.cs.thoughts.interfaces.FeedInterface;
 
 
-public class FeedActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class FeedActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,FeedInterface {
 
     String userEmail, username;
     ThoughtsDataSource thoughtsDataSource;
     UsersDataSource usersDataSource;
+
+
+
+    interface MyCallbackClass{
+        void callbackReturn();
+    }
+    MyCallbackClass myCallbackClass;
+
+    void registerCallback(MyCallbackClass callbackClass){
+        myCallbackClass = callbackClass;
+    }
+
+    public void launchFragment(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.section_label, ViewFeedFragment.newInstance());
+        ft.commit();
+    }
+
+    @Override
+    public void switchFragment(Thought thought) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.container, ViewSingleThoughtFragment.newInstance(thought));
+        ft.commit();
+    }
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -195,5 +221,9 @@ public class FeedActivity extends FragmentActivity
         }
 
     }
+
+
+
+
 
 }

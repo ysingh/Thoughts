@@ -1,11 +1,9 @@
 package edu.ua.cs.thoughts.fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +13,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.entities.Thought;
 
-public class ViewSingleThought extends Fragment {
+public class ViewSingleThoughtFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     @InjectView(R.id.tvThought)
@@ -26,27 +25,13 @@ public class ViewSingleThought extends Fragment {
     @InjectView(R.id.bPolarity)
     Button bPolarity;
 
-    private String message;
+    Thought thought;
 
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//
-//        setTheme(PreferenceManager.getDefaultSharedPreferences(this).getInt("theme", android.R.style.Theme_Holo));
-//        super.onCreate(savedInstanceState);
-//        ActionBarRefresher();
-//        setContentView(R.layout.fragment_view_single_thought);
-//        ButterKnife.inject(this);
-//
-//        Intent i =  getIntent();
-//        message = i.getStringExtra("key");
-//        FillOutUI(message);
-//    }
-
-    public static ViewSingleThought newInstance() {
-        ViewSingleThought fragment = new ViewSingleThought();
+    public static ViewSingleThoughtFragment newInstance(Thought thought) {
+        ViewSingleThoughtFragment fragment = new ViewSingleThoughtFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, 1);
+        args.putParcelable("thought", thought);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,7 +40,17 @@ public class ViewSingleThought extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        final View rootView = inflater.inflate(R.layout.fragment_view_single_thought, container, false);
+
+        if (getArguments().containsKey("thought")) {
+            thought = (Thought) getArguments().getParcelable("thought");
+        }
+
+        ButterKnife.inject(this, rootView);
+
+        FillOutUI(thought.thoughtText);
+
+        return rootView;
     }
 
     private void FillOutUI(String message){
