@@ -22,4 +22,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_new_thought">New Thought</string>
 
+    <string name="polarity">Analyze Polarity</string>
+    <string name="emotion">Analize Emotion</string>
+
 </resources>

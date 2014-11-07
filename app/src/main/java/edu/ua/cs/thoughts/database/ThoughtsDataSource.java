@@ -39,7 +39,7 @@ public class ThoughtsDataSource {
         values.put(MySQLiteHelper.COLUMN_TEXT, thoughtText);
         long thoughtId = database.insert(MySQLiteHelper.TABLE_THOUGHTS, null, values);
 
-        Thought thought = new Thought(thoughtUser, thoughtId, thoughtText);
+        Thought thought = new Thought(thoughtText);
         return thought;
     }
 

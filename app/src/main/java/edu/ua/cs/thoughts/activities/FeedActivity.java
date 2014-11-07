@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
+import edu.ua.cs.thoughts.fragments.ListFeedFragment;
 import edu.ua.cs.thoughts.fragments.NavigationDrawerFragment;
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.database.ThoughtsDataSource;
@@ -20,7 +22,7 @@ import edu.ua.cs.thoughts.database.UsersDataSource;
 import edu.ua.cs.thoughts.fragments.ViewFeedFragment;
 
 
-public class FeedActivity extends Activity
+public class FeedActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     String userEmail, username;
@@ -82,7 +84,7 @@ public class FeedActivity extends Activity
 
         switch (position) {
             case 0: {
-                fragmentManager.beginTransaction().replace(R.id.container, ViewFeedFragment.newInstance())
+                fragmentManager.beginTransaction().replace(R.id.container, ListFeedFragment.newInstance())
                         .commit();
                 break;
             }
@@ -150,6 +152,9 @@ public class FeedActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -188,7 +193,6 @@ public class FeedActivity extends Activity
             ((FeedActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
-
 
     }
 
