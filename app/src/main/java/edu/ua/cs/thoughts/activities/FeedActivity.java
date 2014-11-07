@@ -13,14 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.ThoughtsDataSource;
+import edu.ua.cs.thoughts.database.UsersDataSource;
 import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
 import edu.ua.cs.thoughts.fragments.ListFeedFragment;
 import edu.ua.cs.thoughts.fragments.NavigationDrawerFragment;
-import edu.ua.cs.thoughts.R;
-import edu.ua.cs.thoughts.database.ThoughtsDataSource;
-import edu.ua.cs.thoughts.database.UsersDataSource;
-import edu.ua.cs.thoughts.fragments.ViewFeedFragment;
 import edu.ua.cs.thoughts.fragments.ViewSingleThoughtFragment;
 import edu.ua.cs.thoughts.interfaces.FeedInterface;
 
@@ -44,7 +43,7 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
 
     public void launchFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.section_label, ViewFeedFragment.newInstance());
+        ft.replace(R.id.section_label, ListFeedFragment.newInstance());
         ft.commit();
     }
 
