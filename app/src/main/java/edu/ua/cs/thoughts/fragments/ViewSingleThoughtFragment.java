@@ -10,20 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.entities.Thought;
 
 public class ViewSingleThoughtFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    @InjectView(R.id.tvThought)
     TextView tvThought;
-    @InjectView(R.id.bEmotion)
-    Button bEmotion;
-    @InjectView(R.id.bPolarity)
-    Button bPolarity;
+    Button btnEmotion;
+    Button btnPolarity;
 
     Thought thought;
 
@@ -46,7 +41,9 @@ public class ViewSingleThoughtFragment extends Fragment {
             thought = (Thought) getArguments().getParcelable("thought");
         }
 
-        ButterKnife.inject(this, rootView);
+        tvThought = (TextView) rootView.findViewById(R.id.tvThought);
+        btnEmotion = (Button) rootView.findViewById(R.id.bEmotion);
+        btnPolarity = (Button) rootView.findViewById(R.id.bPolarity);
 
         FillOutUI(thought.thoughtText);
 
@@ -55,13 +52,13 @@ public class ViewSingleThoughtFragment extends Fragment {
 
     private void FillOutUI(String message){
         tvThought.setText(message);
-        bEmotion.setOnClickListener(new View.OnClickListener() {
+        btnEmotion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Do stuff
             }
         });
-        bPolarity.setOnClickListener(new View.OnClickListener() {
+        btnPolarity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Do stuff

@@ -13,7 +13,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import edu.ua.cs.thoughts.activities.FeedActivity;
-import edu.ua.cs.thoughts.adapter.ThoughtAdapter;
 import edu.ua.cs.thoughts.adapter.ThoughtBaseAdapter;
 import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.interfaces.FeedInterface;
