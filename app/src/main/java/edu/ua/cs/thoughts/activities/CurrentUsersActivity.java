@@ -7,54 +7,27 @@ import android.widget.ArrayAdapter;
 import java.util.List;
 
 import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.DataSource;
 import edu.ua.cs.thoughts.entities.User;
-import edu.ua.cs.thoughts.database.UsersDataSource;
 
 public class CurrentUsersActivity extends ListActivity {
-    private UsersDataSource datasource;
+    private DataSource datasource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_users_activity);
 
-        datasource = new UsersDataSource(this);
+        datasource = new DataSource(this);
         datasource.open();
 
         List<User> values = datasource.getAllUsers();
 
-        // use the SimpleCursorAdapter to show the
-        // elements in a ListView
+        // Use a SimpleCursorAdapter to show List of Users
         ArrayAdapter<User> adapter = new ArrayAdapter<User>(this,
                 android.R.layout.simple_list_item_1, values);
         setListAdapter(adapter);
     }
-
-    /*
-    // Will be called via the onClick attribute
-    // of the buttons in main.xml
-    public void onClick(View view) {
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
-        Comment comment = null;
-        switch (view.getId()) {
-            case R.id.add:
-                String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
-                int nextInt = new Random().nextInt(3);
-                // save the new comment to the database
-                comment = datasource.createComment(comments[nextInt]);
-                adapter.add(comment);
-                break;
-            case R.id.delete:
-                if (getListAdapter().getCount() > 0) {
-                    comment = (Comment) getListAdapter().getItem(0);
-                    datasource.deleteComment(comment);
-                    adapter.remove(comment);
-                }
-                break;
-        }
-        adapter.notifyDataSetChanged();
-    } */
 
     @Override
     protected void onResume() {

@@ -17,6 +17,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_THOUGHTID = "thoughtid";
     public static final String COLUMN_THOUGHTUSER = "username";
 
+    public static final String TABLE_TAG = "tags";
+    public static final String KEY_ID = "id";
+    public static final String KEY_CREATED_AT = "created_at";
+    public static final String KEY_TAG_NAME = "tag_name";
+
     private static final String DATABASE_NAME = "users.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -33,6 +38,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                     + COLUMN_THOUGHTUSER + " text not null, "
                     + COLUMN_TEXT + " text)";
 
+    // Tag table create statement
+    private static final String CREATE_TABLE_TAG = "CREATE TABLE " + TABLE_TAG
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TAG_NAME + " TEXT,"
+            + KEY_CREATED_AT + " DATETIME" + ")";
+
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -40,6 +50,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(USERS_CREATE);
+        database.execSQL(CREATE_TABLE_TAG);
         database.execSQL(THOUGHTS_CREATE);
     }
 
@@ -49,6 +60,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TAG);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_THOUGHTS);
         onCreate(db);
     }

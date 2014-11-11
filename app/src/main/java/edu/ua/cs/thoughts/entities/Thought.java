@@ -10,9 +10,9 @@ import android.os.Parcelable;
 public class Thought implements Parcelable {
 
     public String thoughtText, username;
-    public int thoughtID;
+    public long thoughtID;
 
-    public Thought(String thoughtText, String username, int thoughtID) {
+    public Thought(long thoughtID, String username, String thoughtText) {
         this.thoughtText = thoughtText;
         this.username = username;
         this.thoughtID = thoughtID;
@@ -32,7 +32,7 @@ public class Thought implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.thoughtText);
         dest.writeString(this.username);
-        dest.writeInt(this.thoughtID);
+        dest.writeLong(this.thoughtID);
     }
 
     private Thought(Parcel in) {

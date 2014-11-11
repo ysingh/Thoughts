@@ -3,27 +3,36 @@ package edu.ua.cs.thoughts.database;
 /**
  * Created by TaxMac on 10/8/14.
  */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import edu.ua.cs.thoughts.database.MySQLiteHelper;
+import edu.ua.cs.thoughts.entities.Tag;
+import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.entities.User;
 
-public class UsersDataSource {
+public class DataSource {
 
     // Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allColumns = { MySQLiteHelper.COLUMN_USERNAME,
+
+    private String[] userTableColumns = { MySQLiteHelper.COLUMN_USERNAME,
             MySQLiteHelper.COLUMN_EMAIL, MySQLiteHelper.COLUMN_PASSWORD };
 
-    public UsersDataSource(Context context) {
+    private String[] thoughtTableColumns = { MySQLiteHelper.COLUMN_THOUGHTID,
+            MySQLiteHelper.COLUMN_THOUGHTUSER, MySQLiteHelper.COLUMN_TEXT};
+
+    public DataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
     }
 
@@ -57,7 +66,7 @@ public class UsersDataSource {
         List<User> users = new ArrayList<User>();
 
         Cursor cursor = database.query(MySQLiteHelper.TABLE_USERS,
-                allColumns, null, null, null, null, null);
+                userTableColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
 
@@ -104,5 +113,68 @@ public class UsersDataSource {
             }
         }
         return null;
+    }
+
+    /* Creates new thought and inserts it into the database. Returns the
+    thought that was created. */
+    public Thought createThought(String thoughtText, String thoughtUser) {
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.COLUMN_THOUGHTUSER, thoughtUser);
+        values.put(MySQLiteHelper.COLUMN_TEXT, thoughtText);
+        long thoughtId = database.insert(MySQLiteHelper.TABLE_THOUGHTS, null, values);
+
+        Thought thought = new Thought(thoughtId, thoughtUser, thoughtText);
+        return thought;
+    }
+
+    /*
+	 * Creating tag
+	 */
+    public long createTag(Tag tag) {
+
+        ContentValues values = new ContentValues();
+        values.put(MySQLiteHelper.KEY_TAG_NAME, tag.getTagName());
+        values.put(MySQLiteHelper.KEY_CREATED_AT, getDateTime());
+
+        // insert row
+        long tag_id = database.insert(MySQLiteHelper.TABLE_TAG, null, values);
+
+        return tag_id;
+    }
+
+    /**
+     * get datetime
+     * */
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public ArrayList<Thought> getAllThoughts() {
+        ArrayList<Thought> thoughts = new ArrayList<Thought>();
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_THOUGHTS,
+               thoughtTableColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            Thought thought = cursorToThought(cursor);
+            thoughts.add(thought);
+            cursor.moveToNext();
+        }
+
+        // make sure to close the cursor
+        cursor.close();
+
+        return thoughts;
+
+    }
+
+    private Thought cursorToThought(Cursor cursor) {
+        Thought thought = new Thought(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+        return thought;
     }
 }

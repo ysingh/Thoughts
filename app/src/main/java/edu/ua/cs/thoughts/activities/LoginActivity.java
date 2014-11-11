@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ua.cs.thoughts.R;
-import edu.ua.cs.thoughts.database.UsersDataSource;
+import edu.ua.cs.thoughts.database.DataSource;
 
 
 /**
@@ -71,14 +71,14 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private View mLoginFormView;
     private ImageView mLogoImg;
 
-    UsersDataSource usersDataSource;
+    DataSource usersDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usersDataSource = new UsersDataSource(this);
+        usersDataSource = new DataSource(this);
         usersDataSource.open();
 
         // Remove action bar

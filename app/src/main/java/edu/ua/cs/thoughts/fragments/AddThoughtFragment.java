@@ -11,11 +11,20 @@ import android.widget.EditText;
 
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.activities.FeedActivity;
+import edu.ua.cs.thoughts.database.DataSource;
+import edu.ua.cs.thoughts.entities.Thought;
+import edu.ua.cs.thoughts.interfaces.SingleThoughtInterface;
 
 /**
- * Created by TaxMac on 10/16/14.
+ * A Fragment that presents a UI for the User
+ * to enter a new Thought.
+ *
+ * Tarif Haque
  */
+
 public class AddThoughtFragment extends Fragment {
+
+    SingleThoughtInterface mCallBack;
 
     /**
      * The fragment argument representing the section number for this
@@ -25,6 +34,7 @@ public class AddThoughtFragment extends Fragment {
 
     Button btnAddThought;
     EditText etEnterThought;
+    DataSource dataSource;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -39,19 +49,8 @@ public class AddThoughtFragment extends Fragment {
     }
 
     public AddThoughtFragment() {
+
     }
-
-    /* private void initializeViews() {
-        btnAddThought =  (Button) getView().findViewById(R.id.btnAddThought);
-        etEnterThought = (EditText) getView().findViewById(R.id.etEnterThought);
-
-        btnAddThought.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            String enteredThought = etEnterThought.getText().toString();
-            }
-        });
-    } */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,23 +59,14 @@ public class AddThoughtFragment extends Fragment {
 
         btnAddThought = (Button) rootView.findViewById(R.id.btnAddThought);
         etEnterThought = (EditText) rootView.findViewById(R.id.etEnterThought);
+        dataSource = FeedActivity.dataSource;
 
         btnAddThought.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String enteredThought = etEnterThought.getText().toString();
-                // ThoughtsDataSource source = ((FeedActivity) getActivity()).thoughtsDataSource;
-                // String username = ((FeedActivity) getActivity()).username;
-
-
-                //source.createThought(enteredThought, username);
-
-                //CharSequence text = username + " says " + enteredThought;
-                //Toast toast = Toast.makeText(getActivity().getApplicationContext(), text, Toast.LENGTH_SHORT);
-                // toast.show();
-
-
-
+                Thought thought = dataSource.createThought(enteredThought, FeedActivity.username);
+                mCallBack.launchThoughtFragment(thought);
             }
         });
 
@@ -88,6 +78,8 @@ public class AddThoughtFragment extends Fragment {
         super.onAttach(activity);
         ((FeedActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
+        mCallBack = (SingleThoughtInterface) activity;
+
     }
 
 

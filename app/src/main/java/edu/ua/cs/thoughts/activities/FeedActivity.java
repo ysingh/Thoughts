@@ -10,43 +10,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import edu.ua.cs.thoughts.R;
-import edu.ua.cs.thoughts.database.ThoughtsDataSource;
-import edu.ua.cs.thoughts.database.UsersDataSource;
+import edu.ua.cs.thoughts.database.DataSource;
 import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.fragments.AddThoughtFragment;
 import edu.ua.cs.thoughts.fragments.ListFeedFragment;
 import edu.ua.cs.thoughts.fragments.NavigationDrawerFragment;
 import edu.ua.cs.thoughts.fragments.ViewSingleThoughtFragment;
-import edu.ua.cs.thoughts.interfaces.FeedInterface;
+import edu.ua.cs.thoughts.interfaces.SingleThoughtInterface;
 
 
-public class FeedActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks,FeedInterface {
+public class FeedActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks, SingleThoughtInterface {
 
-    String userEmail, username;
-    ThoughtsDataSource thoughtsDataSource;
-    UsersDataSource usersDataSource;
+    public static String userEmail, username;
+    public static DataSource dataSource;
+
+    @Override
+    public void launchThoughtFragment(Thought thought) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.container, ViewSingleThoughtFragment.newInstance(thought));
+        ft.commit();
+    }
 
     interface MyCallbackClass{
         void callbackReturn();
     }
+
     MyCallbackClass myCallbackClass;
 
     void registerCallback(MyCallbackClass callbackClass){
         myCallbackClass = callbackClass;
     }
 
-    public void launchFragment(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.section_label, ListFeedFragment.newInstance());
-        ft.commit();
-    }
-
-    @Override
-    public void switchFragment(Thought thought) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.container, ViewSingleThoughtFragment.newInstance(thought));
-        ft.commit();
-    }
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -69,13 +63,10 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
 
         userEmail = getIntent().getExtras().getString("email");
 
-        thoughtsDataSource = new ThoughtsDataSource(this);
-        thoughtsDataSource.open();
+        dataSource = new DataSource(this);
+        dataSource.open();
 
-        usersDataSource = new UsersDataSource(this);
-        usersDataSource.open();
-
-        username = usersDataSource.getUsernameGivenEmail(userEmail);
+        username = dataSource.getUsernameGivenEmail(userEmail);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -85,15 +76,13 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
 
     @Override
     protected void onResume() {
-        thoughtsDataSource.open();
-        usersDataSource.open();
+        dataSource.open();
         super.onResume();
     }
 
     @Override
     protected void onPause() {
-        thoughtsDataSource.close();
-        usersDataSource.close();
+        dataSource.close();
         super.onPause();
     }
 

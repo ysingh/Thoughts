@@ -1,7 +1,6 @@
 package edu.ua.cs.thoughts.fragments;
 
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +13,9 @@ import java.util.ArrayList;
 
 import edu.ua.cs.thoughts.activities.FeedActivity;
 import edu.ua.cs.thoughts.adapter.ThoughtBaseAdapter;
+import edu.ua.cs.thoughts.database.DataSource;
 import edu.ua.cs.thoughts.entities.Thought;
-import edu.ua.cs.thoughts.interfaces.FeedInterface;
+import edu.ua.cs.thoughts.interfaces.SingleThoughtInterface;
 
 /**
  * Created by TaxMac on 10/16/14.
@@ -24,13 +24,11 @@ public class ListFeedFragment extends ListFragment implements AdapterView.OnItem
 
 
     ThoughtBaseAdapter thoughtBaseAdapter;
+    DataSource dataSource;
 
-    ArrayList<Thought> testThoughts = new ArrayList<Thought>();
-    Thought one = new Thought("Hello");
-    Thought two = new Thought("Hello1");
-    Thought three = new Thought("Hello2");
+    ArrayList<Thought> thoughtsList;
 
-    FeedInterface mCallBack;
+    SingleThoughtInterface mCallBack;
 
     /**
      * The fragment argument representing the section number for this
@@ -56,12 +54,12 @@ public class ListFeedFragment extends ListFragment implements AdapterView.OnItem
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        testThoughts.add(one);
-        testThoughts.add(two);
-        testThoughts.add(three);
 
-        thoughtBaseAdapter = new ThoughtBaseAdapter(getActivity(), testThoughts);
+        dataSource = FeedActivity.dataSource;
+        thoughtsList = dataSource.getAllThoughts();
+        thoughtBaseAdapter = new ThoughtBaseAdapter(getActivity(), thoughtsList);
         setListAdapter(thoughtBaseAdapter);
+
 
 
         return super.onCreateView(inflater, container, savedInstanceState);
@@ -73,18 +71,17 @@ public class ListFeedFragment extends ListFragment implements AdapterView.OnItem
         getListView().setOnItemClickListener(this);
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         ((FeedActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
-        mCallBack = (FeedInterface) activity;
+        mCallBack = (SingleThoughtInterface) activity;
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getActivity(), testThoughts.get(i).thoughtText, Toast.LENGTH_SHORT).show();
-        mCallBack.switchFragment(testThoughts.get(i));
+        Toast.makeText(getActivity(), thoughtsList.get(i).thoughtText, Toast.LENGTH_SHORT).show();
+        mCallBack.launchThoughtFragment(thoughtsList.get(i));
     }
 }
