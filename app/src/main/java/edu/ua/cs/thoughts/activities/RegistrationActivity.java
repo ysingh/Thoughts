@@ -11,14 +11,12 @@ import android.widget.EditText;
 
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.database.DataSource;
-import edu.ua.cs.thoughts.database.DatabaseHelper;
 import edu.ua.cs.thoughts.entities.User;
 
 
 public class RegistrationActivity extends Activity {
 
     private DataSource datasource;
-    DatabaseHelper db;
 
     EditText etEmail, etPassword, etUsername;
     Button btnRegister, btnCurrentUsers;
@@ -42,29 +40,6 @@ public class RegistrationActivity extends Activity {
             public void onClick(View view) {
                 User newUser = new User(etEmail.getText().toString(), etUsername.getText().toString(), etPassword.getText().toString());
                 datasource.addUser(newUser);
-
-                // datasource.createThought("Hello", "testuser");
-
-                // Creating tags
-                // Tag tag1 = new Tag("Shopping");
-                // Tag tag2 = new Tag("Important");
-                // Tag tag3 = new Tag("Watchlist");
-                // Tag tag4 = new Tag("Androidhive");
-
-                // Inserting tags in db
-                // long tag1_id = datasource.createTag(tag1);
-                // long tag2_id = datasource.createTag(tag2);
-                // long tag3_id = datasource.createTag(tag3);
-                // long tag4_id = datasource.createTag(tag4);
-
-
-                // UserDatabase.getInstance().addUser(newUser);
-                //Thought hello = datasource.createThought(etEmail.getText().toString(), "testuser");
-
-                //Toast toast = Toast.makeText(getApplicationContext(), "Welcome to Thoughts, " + newUser.getUsername(), Toast.LENGTH_SHORT);
-                // Toast toast = Toast.makeText(getApplicationContext(), hello.thoughtText, Toast.LENGTH_SHORT);
-
-               //toast.show();
             }
         });
 

@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import edu.ua.cs.thoughts.entities.Tag;
 import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.entities.User;
 
@@ -125,21 +124,6 @@ public class DataSource {
 
         Thought thought = new Thought(thoughtId, thoughtUser, thoughtText);
         return thought;
-    }
-
-    /*
-	 * Creating tag
-	 */
-    public long createTag(Tag tag) {
-
-        ContentValues values = new ContentValues();
-        values.put(MySQLiteHelper.KEY_TAG_NAME, tag.getTagName());
-        values.put(MySQLiteHelper.KEY_CREATED_AT, getDateTime());
-
-        // insert row
-        long tag_id = database.insert(MySQLiteHelper.TABLE_TAG, null, values);
-
-        return tag_id;
     }
 
     /**

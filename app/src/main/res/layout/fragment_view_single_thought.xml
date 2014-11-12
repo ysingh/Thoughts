@@ -17,20 +17,16 @@
         android:layout_height="wrap_content"
         android:text="Analyze Polarity"
         android:id="@+id/bPolarity"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginBottom="25dp" />
+        android:layout_above="@+id/bEmotion"
+        android:layout_alignLeft="@+id/bEmotion"
+        android:layout_alignStart="@+id/bEmotion" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Analize Emotion"
         android:id="@+id/bEmotion"
-        android:layout_marginRight="26dp"
-        android:layout_alignTop="@+id/bPolarity"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
