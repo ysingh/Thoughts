@@ -81,6 +81,28 @@ public class DataSource {
         return users;
     }
 
+    public List<User> getAllUserThoughts(String username) {
+        List<User> users = new ArrayList<User>();
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_USERS,
+                userTableColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            User user = cursorToUser(cursor);
+            if (user.getUsername().equals(username)) {
+                users.add(user);
+            }
+            cursor.moveToNext();
+        }
+
+        // make sure to close the cursor
+        cursor.close();
+
+        return users;
+    }
+
     private User cursorToUser(Cursor cursor) {
         User user = new User(cursor.getString(1), cursor.getString(0), cursor.getString(2));
         return user;
