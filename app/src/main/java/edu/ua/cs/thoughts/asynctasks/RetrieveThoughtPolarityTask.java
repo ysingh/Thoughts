@@ -47,10 +47,12 @@ public class RetrieveThoughtPolarityTask extends AsyncTask<Thought, Void, Docume
     }
 
     protected void onPostExecute(Document result) {
-        Log.i(TAG, result.toString());
 
-        if(result != null)
+
+        if(result != null) {
+            Log.i(TAG, result.toString());
             dataDownloadListener.dataDownloadedSuccessfully(result);
+        }
         else
             dataDownloadListener.dataDownloadFailed();
 

@@ -24,6 +24,7 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
 
     public static String userEmail, username;
     public static DataSource dataSource;
+    private String THOUGHTS_KEY = "thoughts";
 
     @Override
     public void launchThoughtFragment(Thought thought) {
@@ -91,6 +92,10 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
     public void onNavigationDrawerItemSelected(int position) {
         FragmentManager fragmentManager = getFragmentManager();
 
+        String[] mParties = new String[]{
+                "Sad", "Happy", "Fear", "Surprise", "Contempt", "Anger"
+        };
+
         switch (position) {
             case 0: {
                 fragmentManager.beginTransaction().replace(R.id.container, ListFeedFragment.newInstance())
@@ -106,7 +111,8 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
 
             case 2: {
                 Intent myIntent = new Intent(FeedActivity.this, PiechartActivity.class);
-                FeedActivity.this.startActivity(myIntent);
+//                myIntent.putExtra(THOUGHTS_KEY, emotions);
+                startActivity(myIntent);
                 break;
             }
 

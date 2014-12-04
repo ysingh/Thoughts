@@ -140,16 +140,17 @@ public class DataSource {
 
     /* Creates new thought and inserts it into the database. Returns the
     thought that was created. */
-    public Thought createThought(String thoughtText, String thoughtUser) {
+    public Thought createThought(String thoughtText, String thoughtUser, String emotionType) {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_THOUGHTUSER, thoughtUser);
         values.put(MySQLiteHelper.COLUMN_TEXT, thoughtText);
+        values.put(MySQLiteHelper.COLUMN_EMOTION, emotionType);
 
         String dateTime = getDateTime();
         values.put(MySQLiteHelper.COLUMN_DATETIME, dateTime);
         long thoughtId = database.insert(MySQLiteHelper.TABLE_THOUGHTS, null, values);
 
-        Thought thought = new Thought(thoughtId, thoughtUser, thoughtText, dateTime, 0);
+        Thought thought = new Thought(thoughtId, thoughtUser, thoughtText, dateTime, 0, emotionType);
         return thought;
     }
 
@@ -186,7 +187,7 @@ public class DataSource {
     }
 
     private Thought cursorToThought(Cursor cursor) {
-        Thought thought = new Thought(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4));
+        Thought thought = new Thought(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4), cursor.getString(5));
         return thought;
     }
 

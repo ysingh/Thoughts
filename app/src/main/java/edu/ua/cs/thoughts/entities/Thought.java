@@ -14,12 +14,17 @@ public class Thought implements Parcelable {
     public float polarity = 0;
     public long thoughtID;
 
-    public Thought(long thoughtID, String username, String thoughtText, String dateTime, float polarity) {
+    public Thought(long thoughtID, String username, String thoughtText, String dateTime, float polarity, String emotionType) {
         this.thoughtText = thoughtText;
         this.username = username;
+        this.emotionType = emotionType;
         this.thoughtID = thoughtID;
         this.dateTime = dateTime;
         this.polarity = polarity;
+    }
+
+    public String getEmotionType() {
+        return emotionType;
     }
 
     public Thought(String s){

@@ -96,7 +96,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 }
             });
         } else {
-            // Don't offer G+ sign in if the app's version is too low to support Google Play
+            // Don't offer G+ sign in if the app'percentages version is too low to support Google Play
             // Services.
             mPlusSignInButton.setVisibility(View.GONE);
             return;
@@ -306,7 +306,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     protected void onPlusClientRevokeAccess() {
-        // TODO: Access to the user's G+ account has been revoked.  Per the developer terms, delete
+        // TODO: Access to the user'percentages G+ account has been revoked.  Per the developer terms, delete
         // any stored user data here.
     }
 
@@ -316,7 +316,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     /**
-     * Check if the device supports Google Play Services.  It's best
+     * Check if the device supports Google Play Services.  It'percentages best
      * practice to check first rather than handling this as an error case.
      *
      * @return whether the device supports Google Play Services
@@ -329,7 +329,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
+                // Retrieve data rows for the device user'percentages 'profile' contact.
                 Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
                         ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
 

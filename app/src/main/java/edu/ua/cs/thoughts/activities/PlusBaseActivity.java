@@ -199,7 +199,7 @@ public abstract class PlusBaseActivity extends Activity
             mAutoResolveOnFail = false;
             // If we can resolve the error, then call start resolution and pass it an integer tag
             // we can use to track.
-            // This means that when we get the onActivityResult callback we'll know it's from
+            // This means that when we get the onActivityResult callback we'll know it'percentages from
             // being started here.
             mConnectionResult.startResolutionForResult(this, OUR_REQUEST_CODE);
         } catch (IntentSender.SendIntentException e) {
@@ -222,7 +222,7 @@ public abstract class PlusBaseActivity extends Activity
             // If we have a successful result, we will want to be able to resolve any further
             // errors, so turn on resolution with our flag.
             mAutoResolveOnFail = true;
-            // If we have a successful result, let's call connect() again. If there are any more
+            // If we have a successful result, let'percentages call connect() again. If there are any more
             // errors to resolve we'll get our onConnectionFailed, but if not,
             // we'll get onConnected.
             initiatePlusClientConnect();
@@ -255,7 +255,7 @@ public abstract class PlusBaseActivity extends Activity
     /**
      * Connection failed for some reason (called by PlusClient)
      * Try and resolve the result.  Failure here is usually not an indication of a serious error,
-     * just that the user's input is needed.
+     * just that the user'percentages input is needed.
      *
      * @see #onActivityResult(int, int, Intent)
      */

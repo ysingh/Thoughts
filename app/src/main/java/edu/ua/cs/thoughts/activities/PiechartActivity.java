@@ -1,4 +1,5 @@
 package edu.ua.cs.thoughts.activities;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -19,54 +20,60 @@ import com.github.mikephil.charting.utils.Legend.LegendPosition;
 import java.util.ArrayList;
 
 import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.DataSource;
 import edu.ua.cs.thoughts.entities.Thought;
 
 public class PiechartActivity extends FragmentActivity implements OnChartValueSelectedListener {
 
-    protected String[] mParties = new String[] {
-            "Sad", "Happy", "Fear", "Surprise", "Contempt", "Anger"
+    protected String[] mParties = new String[]{
+            "Sad", "Happy", "Fear", "Surprise", "Contempt", "Angry"
     };
-
-    private ArrayList<String> mValues = new ArrayList<String>();
-
-    ArrayList<Thought> thoughts;
     private PieChart mChart;
+    DataSource dataSource;
+    ArrayList<Thought> thoughtsList;
+    protected ArrayList<String> thoughts;
 
-    // Pass in this key when you send the intent to launch the PieChartActivity
-    private String THOUGHTS_KEY = "thoughts";
+    ArrayList<Float> percentages = new ArrayList<Float>();
 
-    ArrayList<Float> s = new ArrayList<Float>();
+    @Override
+    protected void onResume() {
+        dataSource.open();
+        super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+        dataSource.close();
+        super.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        thoughts = getIntent().getParcelableArrayListExtra(THOUGHTS_KEY);
-//        mValues = calculatePercentage(thoughts);
+        thoughts = new ArrayList<String>();
+        dataSource = new DataSource(this);
+        dataSource.open();
+        thoughtsList = dataSource.getAllThoughts();
+        for (int i = 0; i < thoughtsList.size(); i++) {
+            thoughts.add(thoughtsList.get(i).emotionType);
+        }
 
         // Get a string array list of percentages associated with each type of emotion
-        s = calculatePercentage();
+        percentages = calculatePercentage(thoughts);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_piechart);
 
-
         mChart = (PieChart) findViewById(R.id.chart1);
 
         // change the color of the center-hole
         mChart.setHoleColor(Color.rgb(235, 235, 235));
-
         mChart.setHoleRadius(60f);
-
         mChart.setDescription("");
-
         mChart.setDrawYValues(true);
         mChart.setDrawCenterText(true);
-
         mChart.setDrawHoleEnabled(true);
-
         mChart.setRotationAngle(0);
 
         // draws the corresponding description value into the slice
@@ -80,11 +87,9 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
-
         mChart.setCenterText("Emotional Breakdown");
 
-        setData(mParties.length, s.size());
-
+        setData(thoughts.size(), percentages.size());
         mChart.animateXY(1500, 1500);
 
         Legend l = mChart.getLegend();
@@ -94,59 +99,44 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
     }
 
-    //        private ArrayList<String> calculatePercentage(ArrayList<Thought> thoughts) {
-    private ArrayList<Float> calculatePercentage() {
+    private ArrayList<Float> calculatePercentage(ArrayList<String> thoughts) {
         float sad = 0;
         float happy = 0;
-        float anxious = 0;
+        float fear = 0;
         float surprised = 0;
-        float five = 0;
-        float six = 0;
+        float contempt = 0;
+        float angry = 0;
         float total = 0;
 
-        ArrayList<Float>  temp = new ArrayList<Float>();
-//        for(int i = 0; i < thoughts.size(); i++){
-//            if(thoughts.get(i).emotion.toLowerCase().contains("sad")){sad += 1;}
-//            if(thoughts.get(i).emotion.toLowerCase().contains("happy")){happy += 1;}
-//            if(thoughts.get(i).emotion.toLowerCase().contains("anxious")){anxious += 1;}
-//            if(thoughts.get(i).emotion.toLowerCase().contains("surprised")){surprised += 1;}
-//            if(thoughts.get(i).emotion.toLowerCase().contains("something")){something += 1;}
-//            if(thoughts.get(i).emotion.toLowerCase().contains("something1")){something1 += 1;}
-//        }
-
-        // Fake data
-        ArrayList<String> t = new ArrayList<String>();
-        t.add(0, "sad");
-        t.add(1, "sad");
-        t.add(2, "sad");
-        t.add(3, "sad");
-        t.add(4, "sad");
-        t.add(5, "happy");
-        t.add(6, "anxious");
-        t.add(7, "surprised");
-        t.add(8, "five");
-        t.add(9, "six");
-
-        for(int i = 0; i < t.size(); i++){
-            if(t.get(i).toLowerCase().contains("sad")){sad += 1;}
-            if(t.get(i).toLowerCase().contains("happy")){happy += 1;}
-            if(t.get(i).toLowerCase().contains("anxious")){anxious += 1;}
-            if(t.get(i).toLowerCase().contains("surprised")){surprised += 1;}
-            if(t.get(i).toLowerCase().contains("five")){five += 1;}
-            if(t.get(i).toLowerCase().contains("six")){six += 1;}
+        ArrayList<Float> temp = new ArrayList<Float>();
+        for (int i = 0; i < thoughts.size(); i++) {
+            if (thoughts.get(i).toLowerCase().contains("sad")) {
+                sad += 1;
+            }
+            if (thoughts.get(i).toLowerCase().contains("happy")) {
+                happy += 1;
+            }
+            if (thoughts.get(i).toLowerCase().contains("fear")) {
+                fear += 1;
+            }
+            if (thoughts.get(i).toLowerCase().contains("surprised")) {
+                surprised += 1;
+            }
+            if (thoughts.get(i).toLowerCase().contains("contempt")) {
+                contempt += 1;
+            }
+            if (thoughts.get(i).toLowerCase().contains("angry")) {
+                angry += 1;
+            }
         }
-        //
 
-
-
-
-        total = sad + happy + anxious + surprised + five + six;
-        temp.add(((sad/total) * 100));
-        temp.add(((happy/total) * 100));
-        temp.add(((anxious/total) * 100));
-        temp.add(((surprised/total) * 100));
-        temp.add(((five/total) * 100));
-        temp.add(((six/total) * 100));
+        total = sad + happy + fear + surprised + contempt + angry;
+        temp.add(((sad / total) * 100));
+        temp.add(((happy / total) * 100));
+        temp.add(((fear / total) * 100));
+        temp.add(((surprised / total) * 100));
+        temp.add(((contempt / total) * 100));
+        temp.add(((angry / total) * 100));
         return temp;
     }
 
@@ -201,7 +191,6 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
                 break;
             }
             case R.id.actionSave: {
-                // mChart.saveToGallery("title"+System.currentTimeMillis());
                 mChart.saveToPath("title" + System.currentTimeMillis(), "");
                 break;
             }
@@ -230,42 +219,42 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
         // xIndex (even if from different DataSets), since no values can be
         // drawn above each other.
-        for (int i = 0; i < count; i++) {
-            yVals1.add(new Entry(s.get(i), i));
+        for (int i = 0; i < mParties.length; i++) {
+            yVals1.add(new Entry(percentages.get(i), i));
         }
 
         ArrayList<String> xVals = new ArrayList<String>();
 
-        for (int i = 0; i < count ; i++)
-            xVals.add(mParties[i % mParties.length]);
+        for (int i = 0; i < mParties.length; i++) {
+            xVals.add(mParties[i]);
+        }
 
-        PieDataSet set1 = new PieDataSet(yVals1, "Emotions");
+        ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+        ArrayList<String> xVals2 = new ArrayList<String>();
+        for (int i = 0; i < yVals1.size(); i++) {
+            if (yVals1.get(i).getVal() > (0.0f)) {
+                yVals2.add(yVals1.get(i));
+                xVals2.add(xVals.get(i));
+            }
+        }
+
+        PieDataSet set1 = new PieDataSet(yVals2, "Emotions");
         set1.setSliceSpace(3f);
 
         // add a lot of colors
-
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
         colors.add(ColorTemplate.getHoloBlue());
+        colors.add(Color.MAGENTA);
+        colors.add(Color.RED);
+        colors.add(Color.BLUE);
+        colors.add(Color.DKGRAY);
+        colors.add(Color.CYAN);
+        colors.add(Color.LTGRAY);
 
         set1.setColors(colors);
 
-        PieData data = new PieData(xVals, set1);
+        PieData data = new PieData(xVals2, set1);
         mChart.setData(data);
 
         // undo all highlights

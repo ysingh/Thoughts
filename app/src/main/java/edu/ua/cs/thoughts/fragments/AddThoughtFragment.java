@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
+
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.activities.FeedActivity;
 import edu.ua.cs.thoughts.database.DataSource;
@@ -27,6 +29,7 @@ import edu.ua.cs.thoughts.interfaces.SingleThoughtInterface;
 public class AddThoughtFragment extends Fragment {
 
     SingleThoughtInterface mCallBack;
+    protected ArrayList<String> emotions = new ArrayList<String>();
 
     /**
      * The fragment argument representing the section number for this
@@ -65,7 +68,7 @@ public class AddThoughtFragment extends Fragment {
         emotionSpinner = (Spinner) rootView.findViewById(R.id.spinnerEmotion);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = adapter = ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.emotions_array, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
@@ -80,7 +83,9 @@ public class AddThoughtFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String enteredThought = etEnterThought.getText().toString();
-                Thought thought = dataSource.createThought(enteredThought, FeedActivity.username);
+//                emotions.add((String)emotionSpinner.getSelectedItem());
+                Thought thought = dataSource.createThought(enteredThought, FeedActivity.username, (String)emotionSpinner.getSelectedItem());
+
                 mCallBack.launchThoughtFragment(thought);
             }
         });
