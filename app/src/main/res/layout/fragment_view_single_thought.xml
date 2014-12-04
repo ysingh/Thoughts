@@ -69,5 +69,15 @@
         android:layout_alignLeft="@+id/tvPolarity"
         android:layout_alignStart="@+id/tvPolarity" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="DateTime: Unknown"
+        android:id="@+id/tvDateTime"
+        android:layout_below="@+id/tvEmotion"
+        android:layout_toRightOf="@+id/imgEmotion"
+        android:layout_toEndOf="@+id/imgEmotion" />
+
 
 </RelativeLayout>

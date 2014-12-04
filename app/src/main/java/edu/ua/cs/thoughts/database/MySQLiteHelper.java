@@ -16,6 +16,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TEXT = "text";
     public static final String COLUMN_THOUGHTID = "thoughtid";
     public static final String COLUMN_THOUGHTUSER = "username";
+    public static final String COLUMN_DATETIME = "datetime";
+    public static final String COLUMN_POLARITY = "polarity";
+    public static final String COLUMN_EMOTION = "emotion";
 
     public static final String TABLE_TAG = "tags";
     public static final String KEY_ID = "id";
@@ -36,7 +39,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             "create table " + TABLE_THOUGHTS +
                     "(" + COLUMN_THOUGHTID + " integer primary key autoincrement, "
                     + COLUMN_THOUGHTUSER + " text not null, "
-                    + COLUMN_TEXT + " text)";
+                    + COLUMN_TEXT + " text, "
+                    + COLUMN_DATETIME + " text not null, "
+                    + COLUMN_POLARITY + " real, "
+                    + COLUMN_EMOTION + " text)";
 
     // Tag table create statement
     private static final String CREATE_TABLE_TAG = "CREATE TABLE " + TABLE_TAG

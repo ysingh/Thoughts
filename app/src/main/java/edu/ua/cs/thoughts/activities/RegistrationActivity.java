@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.database.DataSource;
@@ -40,6 +41,7 @@ public class RegistrationActivity extends Activity {
             public void onClick(View view) {
                 User newUser = new User(etEmail.getText().toString(), etUsername.getText().toString(), etPassword.getText().toString());
                 datasource.addUser(newUser);
+                Toast.makeText(getApplicationContext(), "Welcome to Thoughts, " + newUser.getUsername(), Toast.LENGTH_SHORT).show();
             }
         });
 

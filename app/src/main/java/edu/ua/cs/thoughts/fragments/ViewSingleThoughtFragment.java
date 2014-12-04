@@ -16,18 +16,22 @@ import org.w3c.dom.Node;
 
 
 import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.activities.FeedActivity;
 import edu.ua.cs.thoughts.asynctasks.RetrieveThoughtPolarityTask;
+import edu.ua.cs.thoughts.database.DataSource;
 import edu.ua.cs.thoughts.entities.Thought;
 import edu.ua.cs.thoughts.interfaces.DataDownloadListener;
 
 public class ViewSingleThoughtFragment extends Fragment {
 
-    TextView tvThought, tvPolarity, tvEmotion;
+    TextView tvThought, tvPolarity, tvEmotion, tvDateTime;
     Button btnEmotion;
     Button btnPolarity;
 
     Thought thought;
     Document document;
+    DataSource dataSource;
+
 
     public static ViewSingleThoughtFragment newInstance(Thought thought) {
         ViewSingleThoughtFragment fragment = new ViewSingleThoughtFragment();
@@ -50,8 +54,17 @@ public class ViewSingleThoughtFragment extends Fragment {
         tvThought = (TextView) rootView.findViewById(R.id.tvThought);
         btnEmotion = (Button) rootView.findViewById(R.id.bEmotion);
         btnPolarity = (Button) rootView.findViewById(R.id.bPolarity);
+
         tvPolarity = (TextView) rootView.findViewById(R.id.tvPolarity);
+        tvPolarity.setText("Polarity: " + thought.polarity);
+
         tvEmotion = (TextView) rootView.findViewById(R.id.tvEmotion);
+
+        tvDateTime = (TextView) rootView.findViewById(R.id.tvDateTime);
+        tvDateTime.setText(thought.dateTime);
+
+        dataSource = FeedActivity.dataSource;
+
 
         FillOutUI(thought.thoughtText);
 
@@ -100,7 +113,7 @@ public class ViewSingleThoughtFragment extends Fragment {
                         String score = eElement.getElementsByTagName("score").item(0).getTextContent();
 
                         tvPolarity.setText("Polarity: " + score + " " + type);
-
+                        dataSource.addPolarityToThought(thought.thoughtID, Float.parseFloat(score));
                     }
                 }
 

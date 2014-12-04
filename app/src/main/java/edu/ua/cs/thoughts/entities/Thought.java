@@ -9,19 +9,30 @@ import android.os.Parcelable;
 
 public class Thought implements Parcelable {
 
-    public String thoughtText, username;
+    public String thoughtText, username, dateTime;
+    public String emotionType = "Unclassified";
+    public float polarity = 0;
     public long thoughtID;
 
-    public Thought(long thoughtID, String username, String thoughtText) {
+    public Thought(long thoughtID, String username, String thoughtText, String dateTime, float polarity) {
         this.thoughtText = thoughtText;
         this.username = username;
         this.thoughtID = thoughtID;
+        this.dateTime = dateTime;
+        this.polarity = polarity;
     }
 
     public Thought(String s){
         this.thoughtText = s;
     }
 
+    public void setEmotionType(String type) {
+        this.emotionType = type;
+    }
+
+    public void setPolarity(float polarity) {
+        this.polarity = polarity;
+    }
 
     @Override
     public int describeContents() {
@@ -33,12 +44,18 @@ public class Thought implements Parcelable {
         dest.writeString(this.thoughtText);
         dest.writeString(this.username);
         dest.writeLong(this.thoughtID);
+        dest.writeString(this.dateTime);
+        dest.writeFloat(this.polarity);
+        dest.writeString(this.emotionType);
     }
 
     private Thought(Parcel in) {
         this.thoughtText = in.readString();
         this.username = in.readString();
         this.thoughtID = in.readInt();
+        this.dateTime = in.readString();
+        this.polarity = in.readFloat();
+        this.emotionType = in.readString();
     }
 
     public static final Parcelable.Creator<Thought> CREATOR = new Parcelable.Creator<Thought>() {

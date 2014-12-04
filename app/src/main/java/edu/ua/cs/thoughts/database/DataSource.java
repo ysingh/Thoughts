@@ -26,10 +26,12 @@ public class DataSource {
     private MySQLiteHelper dbHelper;
 
     private String[] userTableColumns = { MySQLiteHelper.COLUMN_USERNAME,
-            MySQLiteHelper.COLUMN_EMAIL, MySQLiteHelper.COLUMN_PASSWORD };
+            MySQLiteHelper.COLUMN_EMAIL, MySQLiteHelper.COLUMN_PASSWORD,
+            };
 
     private String[] thoughtTableColumns = { MySQLiteHelper.COLUMN_THOUGHTID,
-            MySQLiteHelper.COLUMN_THOUGHTUSER, MySQLiteHelper.COLUMN_TEXT};
+            MySQLiteHelper.COLUMN_THOUGHTUSER, MySQLiteHelper.COLUMN_TEXT, MySQLiteHelper.COLUMN_DATETIME,
+            MySQLiteHelper.COLUMN_POLARITY, MySQLiteHelper.COLUMN_EMOTION};
 
     public DataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -142,9 +144,12 @@ public class DataSource {
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_THOUGHTUSER, thoughtUser);
         values.put(MySQLiteHelper.COLUMN_TEXT, thoughtText);
+
+        String dateTime = getDateTime();
+        values.put(MySQLiteHelper.COLUMN_DATETIME, dateTime);
         long thoughtId = database.insert(MySQLiteHelper.TABLE_THOUGHTS, null, values);
 
-        Thought thought = new Thought(thoughtId, thoughtUser, thoughtText);
+        Thought thought = new Thought(thoughtId, thoughtUser, thoughtText, dateTime, 0);
         return thought;
     }
 
@@ -152,6 +157,7 @@ public class DataSource {
      * get datetime
      * */
     private String getDateTime() {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date date = new Date();
@@ -180,7 +186,13 @@ public class DataSource {
     }
 
     private Thought cursorToThought(Cursor cursor) {
-        Thought thought = new Thought(cursor.getLong(0), cursor.getString(1), cursor.getString(2));
+        Thought thought = new Thought(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getFloat(4));
         return thought;
+    }
+
+    public void addPolarityToThought(long thoughtID, float polarity) {
+        ContentValues args = new ContentValues();
+        args.put(MySQLiteHelper.COLUMN_POLARITY, polarity);
+        database.update(MySQLiteHelper.TABLE_THOUGHTS, args, MySQLiteHelper.COLUMN_THOUGHTID + "=" + thoughtID, null);
     }
 }

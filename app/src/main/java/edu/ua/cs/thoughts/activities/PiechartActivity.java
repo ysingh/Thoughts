@@ -1,5 +1,4 @@
 package edu.ua.cs.thoughts.activities;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -17,7 +16,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.Legend.LegendPosition;
 
-
 import java.util.ArrayList;
 
 import edu.ua.cs.thoughts.R;
@@ -29,20 +27,15 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
             "Sad", "Happy", "Anxious", "Surprised", "Something", "Something1"
     };
 
-//    protected String[] mValues;
     private ArrayList<String> mValues = new ArrayList<String>();
-//    {
-//        "Sad", "Happy", "Anxious", "Surprised", "Something", "Something1",
-//        "Sad", "Happy", "Anxious", "Surprised", "Something", "Something1",
-//        "Sad", "Sad", "Sad", "Sad"
-//    };
 
     ArrayList<Thought> thoughts;
-
     private PieChart mChart;
+
+    // Pass in this key when you send the intent to launch the PieChartActivity
     private String THOUGHTS_KEY = "thoughts";
 
-    ArrayList<String> s = new ArrayList<String>();
+    ArrayList<Float> s = new ArrayList<Float>();
 
 
     @Override
@@ -52,6 +45,7 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         thoughts = getIntent().getParcelableArrayListExtra(THOUGHTS_KEY);
 //        mValues = calculatePercentage(thoughts);
 
+        // Get a string array list of percentages associated with each type of emotion
         s = calculatePercentage();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -63,11 +57,6 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
         // change the color of the center-hole
         mChart.setHoleColor(Color.rgb(235, 235, 235));
-
-//        Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-//
-//        mChart.setValueTypeface(tf);
-//        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf"));
 
         mChart.setHoleRadius(60f);
 
@@ -88,19 +77,15 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
         // display percentage values
         mChart.setUsePercentValues(true);
-        // mChart.setUnit(" €");
-        // mChart.setDrawUnitsInChart(true);
 
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
-        // mChart.setTouchEnabled(false);
 
         mChart.setCenterText("MPAndroidChart\nLibrary");
 
         setData(mParties.length, s.size());
 
         mChart.animateXY(1500, 1500);
-        // mChart.spin(2000, 0, 360);
 
         Legend l = mChart.getLegend();
         l.setPosition(LegendPosition.RIGHT_OF_CHART);
@@ -109,17 +94,17 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
     }
 
-//    private ArrayList<String> calculatePercentage(ArrayList<Thought> thoughts) {
-    private ArrayList<String> calculatePercentage() {
-        int sad = 0;
-        int happy = 0;
-        int anxious = 0;
-        int surprised = 0;
-        int something = 0;
-        int something1 = 0;
-        int total = 0;
+    //        private ArrayList<String> calculatePercentage(ArrayList<Thought> thoughts) {
+    private ArrayList<Float> calculatePercentage() {
+        float sad = 0;
+        float happy = 0;
+        float anxious = 0;
+        float surprised = 0;
+        float five = 0;
+        float six = 0;
+        float total = 0;
 
-        ArrayList<String>  temp = new ArrayList<String>();
+        ArrayList<Float>  temp = new ArrayList<Float>();
 //        for(int i = 0; i < thoughts.size(); i++){
 //            if(thoughts.get(i).emotion.toLowerCase().contains("sad")){sad += 1;}
 //            if(thoughts.get(i).emotion.toLowerCase().contains("happy")){happy += 1;}
@@ -139,26 +124,30 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         t.add(5, "happy");
         t.add(6, "anxious");
         t.add(7, "surprised");
-        t.add(8, "something");
-        t.add(9, "something1");
+        t.add(8, "five");
+        t.add(9, "six");
 
         for(int i = 0; i < t.size(); i++){
             if(t.get(i).toLowerCase().contains("sad")){sad += 1;}
             if(t.get(i).toLowerCase().contains("happy")){happy += 1;}
             if(t.get(i).toLowerCase().contains("anxious")){anxious += 1;}
             if(t.get(i).toLowerCase().contains("surprised")){surprised += 1;}
-            if(t.get(i).toLowerCase().contains("something")){something += 1;}
-            if(t.get(i).toLowerCase().contains("something1")){something1 += 1;}
+            if(t.get(i).toLowerCase().contains("five")){five += 1;}
+            if(t.get(i).toLowerCase().contains("six")){six += 1;}
         }
+        //
 
-        total = sad + happy + anxious + surprised + something + something1;
-        temp.add(((sad/total) * 100) + "%");
-        temp.add(((happy/total) * 100) + "%");
-        temp.add(((anxious/total) * 100) + "%");
-        temp.add(((surprised/total) * 100) + "%");
-        temp.add(((something/total) * 100) + "%");
-        temp.add(((something1/total) * 100) + "%");
-        return t;
+
+
+
+        total = sad + happy + anxious + surprised + five + six;
+        temp.add(((sad/total) * 100));
+        temp.add(((happy/total) * 100));
+        temp.add(((anxious/total) * 100));
+        temp.add(((surprised/total) * 100));
+        temp.add(((five/total) * 100));
+        temp.add(((six/total) * 100));
+        return temp;
     }
 
     @Override
@@ -241,13 +230,13 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         // IMPORTANT: In a PieChart, no values (Entry) should have the same
         // xIndex (even if from different DataSets), since no values can be
         // drawn above each other.
-        for (int i = 0; i < count + 1; i++) {
-            yVals1.add(new Entry((float) (Math.random() * mult) + mult / 5, i));
+        for (int i = 0; i < count; i++) {
+            yVals1.add(new Entry(s.get(i), i));
         }
 
         ArrayList<String> xVals = new ArrayList<String>();
 
-        for (int i = 0; i < count + 1; i++)
+        for (int i = 0; i < count ; i++)
             xVals.add(mParties[i % mParties.length]);
 
         PieDataSet set1 = new PieDataSet(yVals1, "Election Results");
@@ -299,46 +288,4 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
     public void onNothingSelected() {
         Log.i("PieChart", "nothing selected");
     }
-
-    // private void removeLastEntry() {
-    //
-    // PieData data = mChart.getDataOriginal();
-    //
-    // if (data != null) {
-    //
-    // PieDataSet set = data.getDataSet();
-    //
-    // if (set != null) {
-    //
-    // Entry e = set.getEntryForXIndex(set.getEntryCount() - 1);
-    //
-    // data.removeEntry(e, 0);
-    // // or remove by index
-    // // mData.removeEntry(xIndex, dataSetIndex);
-    //
-    // mChart.notifyDataSetChanged();
-    // mChart.invalidate();
-    // }
-    // }
-    // }
-    //
-    // private void addEntry() {
-    //
-    // PieData data = mChart.getDataOriginal();
-    //
-    // if (data != null) {
-    //
-    // PieDataSet set = data.getDataSet();
-    // // set.addEntry(...);
-    //
-    // data.addEntry(new Entry((float) (Math.random() * 25) + 20f,
-    // set.getEntryCount()), 0);
-    //
-    // // let the chart know it's data has changed
-    // mChart.notifyDataSetChanged();
-    //
-    // // redraw the chart
-    // mChart.invalidate();
-    // }
-    // }
 }

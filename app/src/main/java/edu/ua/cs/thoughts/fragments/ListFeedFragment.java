@@ -81,7 +81,6 @@ public class ListFeedFragment extends ListFragment implements AdapterView.OnItem
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getActivity(), thoughtsList.get(i).thoughtText, Toast.LENGTH_SHORT).show();
         mCallBack.launchThoughtFragment(thoughtsList.get(i));
     }
 }
