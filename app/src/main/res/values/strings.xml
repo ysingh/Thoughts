@@ -14,8 +14,6 @@
     <string name="title_section2">Polarity</string>
     <string name="title_section3">Emotion</string>
 
-
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -23,7 +21,17 @@
     <string name="action_new_thought">New Thought</string>
 
     <string name="polarity">Analyze Polarity</string>
-    <string name="emotion">Analize Emotion</string>
-    <string name="title_activity_piechart">PieChart</string>
+    <string name="emotion">Analyze Emotion</string>
+    <string name="title_activity_piechart">Emotion of Thoughts</string>
+
+    <string-array name="emotions_array">
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Angry</item>
+        <item>Contempt</item>
+        <item>Fear</item>
+        <item>Surprised</item>
+        <item>Unclassified</item>
+    </string-array>
 
 </resources>

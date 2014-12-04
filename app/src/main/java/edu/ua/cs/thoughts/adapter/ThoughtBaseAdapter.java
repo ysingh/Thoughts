@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import edu.ua.cs.thoughts.R;
@@ -41,6 +44,7 @@ public class ThoughtBaseAdapter extends BaseAdapter {
         return thoughts.indexOf(getItem(position));
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -50,9 +54,11 @@ public class ThoughtBaseAdapter extends BaseAdapter {
         }
 
         TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
+        TextView txtDate = (TextView) convertView.findViewById(R.id.tvFeedDate);
 
         Thought row_pos = thoughts.get(position);
         txtTitle.setText(row_pos.thoughtText);
+        txtDate.setText(row_pos.dateTime);
 
         return convertView;
     }

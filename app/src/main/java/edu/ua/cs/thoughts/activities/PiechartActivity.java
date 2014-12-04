@@ -24,7 +24,7 @@ import edu.ua.cs.thoughts.entities.Thought;
 public class PiechartActivity extends FragmentActivity implements OnChartValueSelectedListener {
 
     protected String[] mParties = new String[] {
-            "Sad", "Happy", "Anxious", "Surprised", "Something", "Something1"
+            "Sad", "Happy", "Fear", "Surprise", "Contempt", "Anger"
     };
 
     private ArrayList<String> mValues = new ArrayList<String>();
@@ -81,7 +81,7 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
 
-        mChart.setCenterText("MPAndroidChart\nLibrary");
+        mChart.setCenterText("Emotional Breakdown");
 
         setData(mParties.length, s.size());
 
@@ -239,7 +239,7 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         for (int i = 0; i < count ; i++)
             xVals.add(mParties[i % mParties.length]);
 
-        PieDataSet set1 = new PieDataSet(yVals1, "Election Results");
+        PieDataSet set1 = new PieDataSet(yVals1, "Emotions");
         set1.setSliceSpace(3f);
 
         // add a lot of colors

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -98,8 +99,14 @@ public class FeedActivity extends Activity implements NavigationDrawerFragment.N
             }
 
             case 1: {
-                fragmentManager.beginTransaction().replace(R.id.container, AddThoughtFragment.newInstance())
-                        .commit();
+                Intent myIntent = new Intent(FeedActivity.this, DisplayLineChartActivity.class);
+                FeedActivity.this.startActivity(myIntent);
+                break;
+            }
+
+            case 2: {
+                Intent myIntent = new Intent(FeedActivity.this, PiechartActivity.class);
+                FeedActivity.this.startActivity(myIntent);
                 break;
             }
 

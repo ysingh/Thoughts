@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import edu.ua.cs.thoughts.R;
 import edu.ua.cs.thoughts.activities.FeedActivity;
@@ -34,6 +36,7 @@ public class AddThoughtFragment extends Fragment {
 
     Button btnAddThought;
     EditText etEnterThought;
+    Spinner emotionSpinner;
     DataSource dataSource;
 
     /**
@@ -59,6 +62,18 @@ public class AddThoughtFragment extends Fragment {
 
         btnAddThought = (Button) rootView.findViewById(R.id.btnAddThought);
         etEnterThought = (EditText) rootView.findViewById(R.id.etEnterThought);
+        emotionSpinner = (Spinner) rootView.findViewById(R.id.spinnerEmotion);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.emotions_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        emotionSpinner.setAdapter(adapter);
+
         dataSource = FeedActivity.dataSource;
 
         btnAddThought.setOnClickListener(new View.OnClickListener() {

@@ -25,6 +25,15 @@
         android:text="Add"
         android:id="@+id/btnAddThought"
         android:layout_below="@+id/etEnterThought"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignRight="@+id/etEnterThought"
+        android:layout_alignEnd="@+id/etEnterThought" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerEmotion"
+        android:layout_alignBottom="@+id/btnAddThought"
+        android:layout_toLeftOf="@+id/btnAddThought"
+        android:layout_toStartOf="@+id/btnAddThought" />
 
 </RelativeLayout>

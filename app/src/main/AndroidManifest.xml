@@ -51,11 +51,12 @@
             android:name=".activities.PiechartActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_piechart" >
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+        </activity>
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+        <activity
+            android:name=".activities.DisplayLineChartActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_piechart" >
         </activity>
 
 
