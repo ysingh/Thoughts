@@ -24,5 +24,6 @@
 
     <string name="polarity">Analyze Polarity</string>
     <string name="emotion">Analize Emotion</string>
+    <string name="title_activity_piechart">PieChart</string>
 
 </resources>

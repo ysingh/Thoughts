@@ -25,6 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.android.support:support-v4:20.0.0'
     compile 'com.github.gabrielemariotti.cards:library:1.9.1'
+    compile files('libs/mpandroidchartlibrary-1-7-4.jar')
 }
 
 /////////////////////

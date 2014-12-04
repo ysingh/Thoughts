@@ -3,30 +3,71 @@
     android:layout_height="match_parent"
     tools:context="edu.ua.cs.thoughts.fragments.ViewSingleThoughtFragment">
 
+
+
+    <ImageView
+        android:id="@+id/imgEmotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/question"
+        android:layout_margin="4dp"
+        android:layout_alignParentTop="true"
+        />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="4dp"
         android:id="@+id/tvThought"
-        android:padding="2sp"
-        android:background="#5000"
+        android:padding="4sp"
+        android:background="#101010"
+        android:textColor="#FFFFFF"
         android:gravity="center"
-        android:layout_above="@+id/bPolarity" />
+        android:layout_below="@+id/imgEmotion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Analyze Polarity"
+        android:text="Polarity"
+        android:layout_margin="4dp"
         android:id="@+id/bPolarity"
-        android:layout_above="@+id/bEmotion"
-        android:layout_alignLeft="@+id/bEmotion"
-        android:layout_alignStart="@+id/bEmotion" />
+        android:layout_alignBottom="@+id/imgEmotion"
+        android:layout_toLeftOf="@+id/bEmotion"
+        android:layout_toStartOf="@+id/bEmotion" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Analize Emotion"
+        android:text="Emotion"
+        android:layout_margin="4dp"
         android:id="@+id/bEmotion"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBottom="@+id/imgEmotion"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Polarity: Unknown"
+        android:id="@+id/tvPolarity"
+        android:layout_toRightOf="@+id/imgEmotion"
+        android:layout_toEndOf="@+id/imgEmotion"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Emotion: Unknown"
+        android:id="@+id/tvEmotion"
+        android:layout_below="@+id/tvPolarity"
+        android:layout_alignLeft="@+id/tvPolarity"
+        android:layout_alignStart="@+id/tvPolarity" />
+
 
 </RelativeLayout>
