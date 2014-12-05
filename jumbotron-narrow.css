@@ -1,6 +1,6 @@
 /* Space out contents a little bit */
 body {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 20px;
 }
 
@@ -14,7 +14,8 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #009dff;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -76,4 +77,25 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+
+
+  /* CUSTOM STYLES */
+  .angry { color: rgb(220,20,60); }
+  .happy { color: rgb(124,252,0); }
+  .sad {color: rgb(64,224,208); }
+  .suprise{ color: rgb(255,165,0);}
+  .disgust{ color: rgb(218,112,214); }
+  .thought{ color: rgb(255,99,71); }
+  .rightImg { position:relative; float:right; width: 40%; height:70%;}
+  .padded {padding:40px;}
+  #wrap { float: left; width:60%;}
+  .centered { text-align: center;}
+  img[alt="portrait"] {
+	      -webkit-border-radius: 64px;
+	          -moz-border-radius: 64px;
+		      -ms-border-radius: 64px;
+		          -o-border-radius: 64px;
+			      border-radius: 64px;
+		      }
+  .feedImg { padding:60px; }
 }
