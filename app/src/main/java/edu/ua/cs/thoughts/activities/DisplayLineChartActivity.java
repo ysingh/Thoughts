@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.DateTimeKeyListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,13 +17,18 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.github.mikephil.charting.utils.XLabels;
 import com.github.mikephil.charting.utils.YLabels;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.ua.cs.thoughts.R;
+import edu.ua.cs.thoughts.database.DataSource;
+import edu.ua.cs.thoughts.entities.Thought;
 
 
 public class DisplayLineChartActivity extends Activity {
@@ -34,6 +40,12 @@ public class DisplayLineChartActivity extends Activity {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
     };
 
+    DataSource dataSource;
+    ArrayList<Thought> thoughtsList;
+    protected ArrayList<Float> polarityList;
+
+    ArrayList<String> dateList = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,19 +53,39 @@ public class DisplayLineChartActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.fragment_display_line_chart);
 
+        polarityList = new ArrayList<Float>();
+        dataSource = new DataSource(this);
+        dataSource.open();
+        thoughtsList = dataSource.getAllThoughts();
+        for (int i = 0; i < thoughtsList.size(); i++) {
+            polarityList.add(thoughtsList.get(i).polarity);
+            dateList.add(thoughtsList.get(i).dateTime);
+        }
+
       //  mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Bold.ttf");
 
         //Get Dummy data
-        LineData data = getData(36, 100);
+        LineData data = getData(polarityList.size());
 
         //Instantiate a Line chart
         LineChart chart = (LineChart) findViewById(R.id.chart);
 
         //Setup the chart
-         setUpChart(chart, data, Color.rgb(137,230,81));
+         setUpChart(chart, data, Color.rgb(162,9,9));
 
     }
 
+    @Override
+    protected void onResume() {
+        dataSource.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        dataSource.close();
+        super.onPause();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,7 +115,8 @@ public class DisplayLineChartActivity extends Activity {
         chart.setStartAtZero(false);
 
         // Set display properties of values displayed on the chart
-        chart.setValueTextColor(Color.BLUE);
+        chart.setValueTextColor(Color.WHITE);
+
         // disable the drawing of values into the chart
         chart.setDrawYValues(true);
 
@@ -112,7 +145,7 @@ public class DisplayLineChartActivity extends Activity {
         // if disabled, scaling can be done on x- and y-axis separately
         chart.setPinchZoom(true);
 
-        chart.setBackgroundColor(color);
+        chart.setBackgroundColor(Color.GRAY);
 
         //chart.setValueTypeface(mTf);
 
@@ -144,30 +177,54 @@ public class DisplayLineChartActivity extends Activity {
 
 
     //Dummy Data generator
-    private LineData getData(int count, float range) {
+    private LineData getData(int count) {
 
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < count; i++) {
-            xVals.add(mMonths[i % 12]);
+            xVals.add(dateList.get(i));
         }
 
         ArrayList<Entry> yVals = new ArrayList<Entry>();
 
         for (int i = 0; i < count; i++) {
-            float val = (float) ( Math.random() * range ) + .3f;
+            float val = polarityList.get(i);
             yVals.add(new Entry(val, i));
         }
 
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        // IMPORTANT: In a PieChart, no values (Entry) should have the same
+        // xIndex (even if from different DataSets), since no values can be
+        // drawn above each other.
+//        for (int i = 0; i < mParties.length; i++) {
+//            yVals1.add(new Entry(percentages.get(i), i));
+//        }
+//
+//        ArrayList<String> xVals = new ArrayList<String>();
+//
+//        for (int i = 0; i < mParties.length; i++) {
+//            xVals.add(mParties[i]);
+//        }
+
         // create a dataset and give it a type
         LineDataSet set1 = new LineDataSet(yVals, "Polarity Analysis");
-        set1.setFillAlpha(110);
-        set1.setFillColor(Color.RED);
 
-        set1.setLineWidth(1.75f);
-        set1.setCircleSize(5f);
-        set1.setColor(Color.WHITE);
-        set1.setCircleColor(Color.WHITE);
-        set1.setHighLightColor(Color.WHITE);
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setCircleColor(ColorTemplate.getHoloBlue());
+        set1.setLineWidth(2f);
+        set1.setCircleSize(4f);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+        set1.setHighLightColor(Color.rgb(244, 117, 117));
+//        set1.setFillAlpha(110);
+//        set1.setFillColor(Color.WHITE);
+//
+//        set1.setLineWidth(1.75f);
+//        set1.setCircleSize(5f);
+//        int red = Color.argb(139, 0, 0, 64);
+//        set1.setColor(red);
+//        set1.setCircleColor(Color.BLACK);
+//        set1.setHighLightColor(Color.BLACK);
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
         dataSets.add(set1); // add the datasets

@@ -23,6 +23,16 @@ public class Thought implements Parcelable {
         this.polarity = polarity;
     }
 
+    public String getPolarityPercentage() {
+        float percent = polarity * 100f;
+        return Float.toString(percent);
+    }
+
+    public String getPolarityClass() {
+        if (polarity > 0) return "Positive";
+        else return  "Negative";
+    }
+
     public String getEmotionType() {
         return emotionType;
     }

@@ -68,7 +68,7 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
         mChart = (PieChart) findViewById(R.id.chart1);
 
         // change the color of the center-hole
-        mChart.setHoleColor(Color.rgb(235, 235, 235));
+        mChart.setHoleColor(Color.rgb(255,255,255));
         mChart.setHoleRadius(60f);
         mChart.setDescription("");
         mChart.setDrawYValues(true);
@@ -110,24 +110,12 @@ public class PiechartActivity extends FragmentActivity implements OnChartValueSe
 
         ArrayList<Float> temp = new ArrayList<Float>();
         for (int i = 0; i < thoughts.size(); i++) {
-            if (thoughts.get(i).toLowerCase().contains("sad")) {
-                sad += 1;
-            }
-            if (thoughts.get(i).toLowerCase().contains("happy")) {
-                happy += 1;
-            }
-            if (thoughts.get(i).toLowerCase().contains("fear")) {
-                fear += 1;
-            }
-            if (thoughts.get(i).toLowerCase().contains("surprised")) {
-                surprised += 1;
-            }
-            if (thoughts.get(i).toLowerCase().contains("contempt")) {
-                contempt += 1;
-            }
-            if (thoughts.get(i).toLowerCase().contains("angry")) {
-                angry += 1;
-            }
+            if (thoughts.get(i).toLowerCase().contains("sad")) {sad += 1;}
+            if (thoughts.get(i).toLowerCase().contains("happy")) {happy += 1;}
+            if (thoughts.get(i).toLowerCase().contains("fear")) {fear += 1;}
+            if (thoughts.get(i).toLowerCase().contains("surprised")) {surprised += 1;}
+            if (thoughts.get(i).toLowerCase().contains("contempt")) {contempt += 1;}
+            if (thoughts.get(i).toLowerCase().contains("angry")) {angry += 1;}
         }
 
         total = sad + happy + fear + surprised + contempt + angry;

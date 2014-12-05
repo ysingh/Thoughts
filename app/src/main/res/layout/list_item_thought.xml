@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/one"
+    android:id="@+id/layoutThoughtItem"
+    android:background="@color/card_activated"
     android:padding="5dp">
 
     <ImageView
@@ -21,9 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_height="65dp"
+        android:text="Here is some sample text."
         android:layout_toRightOf="@id/imgFeedIcon"
         android:textColor="@color/five"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:layout_width="wrap_content"

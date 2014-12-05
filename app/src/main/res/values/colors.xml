@@ -12,11 +12,14 @@
     <item name="darkorange" type="color">#FFFF8800</item>
     <item name="darkred" type="color">#FFCC0000</item>
 
+
+
     <item name="one" type="color">#CFF09E</item>
     <item name="two" type="color">#A8DBA8</item>
     <item name="three" type="color">#79BD9A</item>
     <item name="four" type="color">#3B8686</item>
     <item name="five" type="color">#0B486B</item>
+    <item name="grey" type="color">#808080</item>
 
     <integer-array name="androidcolors">
         <item>@color/blue</item>

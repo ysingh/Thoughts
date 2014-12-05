@@ -1,83 +1,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
     tools:context="edu.ua.cs.thoughts.fragments.ViewSingleThoughtFragment">
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:background="#95010101"
+            android:layout_height="match_parent"
+            android:id="@+id/tvThought"
+            android:padding="4sp"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="Some sample text."
+            android:maxLines = "40"
+            android:scrollbars = "vertical"
+            android:layout_above="@+id/btnPolarity"
+            android:layout_below="@+id/tvDateTime" />
 
     <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:id="@+id/imgEmotion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:src="@drawable/question"
-        android:layout_margin="4dp"
-        android:layout_alignParentTop="true"
-        />
+       />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:id="@+id/tvThought"
-        android:padding="4sp"
-        android:background="#101010"
-        android:textColor="#FFFFFF"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="8:05 PM, 15 January 2015"
         android:gravity="center"
+        android:id="@+id/tvDateTime"
         android:layout_below="@+id/imgEmotion"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Polarity"
-        android:layout_margin="4dp"
-        android:id="@+id/bPolarity"
-        android:layout_alignBottom="@+id/imgEmotion"
-        android:layout_toLeftOf="@+id/bEmotion"
-        android:layout_toStartOf="@+id/bEmotion" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Emotion"
-        android:layout_margin="4dp"
-        android:id="@+id/bEmotion"
-        android:layout_alignBottom="@+id/imgEmotion"
+        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Polarity: Unknown"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Unclassified / 75% Positive"
+        android:gravity="center"
         android:id="@+id/tvPolarity"
-        android:layout_toRightOf="@+id/imgEmotion"
-        android:layout_toEndOf="@+id/imgEmotion"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Emotion: Unknown"
-        android:id="@+id/tvEmotion"
-        android:layout_below="@+id/tvPolarity"
-        android:layout_alignLeft="@+id/tvPolarity"
-        android:layout_alignStart="@+id/tvPolarity" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="DateTime: Unknown"
-        android:id="@+id/tvDateTime"
-        android:layout_below="@+id/tvEmotion"
         android:layout_toRightOf="@+id/imgEmotion"
-        android:layout_toEndOf="@+id/imgEmotion" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/tvDateTime" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/polarity"
+        android:id="@+id/btnPolarity"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/tvThought"
+        android:layout_alignStart="@+id/tvThought" />
 
 
 </RelativeLayout>
